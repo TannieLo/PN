@@ -1,0 +1,7 @@
+# Excel lock/temp files
+~$*.xlsx
+~$*.xls
+~$*.docx
+
+# Claude Code local settings
+.claude/
