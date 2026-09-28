@@ -1,0 +1,1318 @@
+name: "PN 申請 (90/80編碼)"
+description: "填寫基本資料，自動產生/更新 90PN_<Model Name>.xlsx"
+title: "[PN申請] "
+labels: ["pn-request"]
+body:
+  - type: markdown
+    attributes:
+      value: "## 基本資料"
+
+  - type: input
+    id: model_name
+    attributes:
+      label: "Model Name"
+      placeholder: "GT-AX67"
+    validations:
+      required: true
+
+  - type: input
+    id: project_code
+    attributes:
+      label: "Project Code（3碼，PLM系統）"
+      placeholder: "0AN"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: project_type
+    attributes:
+      label: "專案類型"
+      description: "OEM：70/60 PN 由你在下面「80 PN 分組定義」填寫。ODM/JDM/Cosign：70/60 PN 留空，由審核者在 PR 裡補上。"
+      options:
+        - "OEM"
+        - "ODM"
+        - "JDM"
+        - "Cosign"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ems_org
+    attributes:
+      label: "代工廠 EMS"
+      options:
+        - "AGP - 智易 Arcadyan_大陸"
+        - "AJR - 智易 Arcadyan_台灣"
+        - "AR1 - 智易 Arcadyan_越南"
+        - "AFL - 訊舟 Acelink_大陸"
+        - "AQR - 訊舟 Acelink_台灣"
+        - "AWM - 同維/共進_深圳"
+        - "AUG - 同維/共進_香港"
+        - "AOR - 亞旭 Askey_大陸"
+        - "AQH - 亞旭 Askey_台灣"
+        - "ATC - 正文_崑山"
+        - "AZK - 正文_安博"
+        - "AS9 - 正文_越南"
+        - "AS3 - 世紀本原"
+        - "AK4 - 華芸"
+        - "AKM - 啟碁"
+        - "AKN - 金磚"
+        - "AFW - 晶訊"
+        - "AVT - 品威"
+        - "AWJ - 東碩_台灣"
+        - "AXY - 康全_大陸"
+        - "A3C - 偉迪"
+        - "AKS - 訊舟 Acelink_大陸(Consign)"
+        - "ASI - 訊舟 Acelink_台灣(Consign)"
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "## 80 PN 分組定義（最多 5 組）
+先定義這次申請會用到的顏色/PCBA/機種分類/出貨數量組合。下面「SKU 申請」區塊裡，每一組 SKU 要指定屬於哪一個分組。沒用到的分組留空即可。"
+
+  - type: markdown
+    attributes:
+      value: "### 分組 1"
+
+  - type: dropdown
+    id: g1_color
+    attributes:
+      label: "產品顏色 (ID+Color)"
+      options:
+        - "0 - 不分色"
+        - "B - Black"
+        - "W - White"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g1_pcba
+    attributes:
+      label: "PCBA"
+      options:
+        - "0 - All SKU 通用 (Default)"
+        - "A - PCBA_US"
+        - "B - PCBA_EU"
+        - "E - EPA"
+        - "I - IPA"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g1_class
+    attributes:
+      label: "機種分類"
+      options:
+        - "0 - 不分子母機 (一般 Router/PCE/USB 等)"
+        - "R - 子母機 - Router (母機)"
+        - "N - 子母機 - Node (子機)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g1_pk
+    attributes:
+      label: "出貨機台數量 (PK)"
+      options:
+        - "1 - 1pk"
+        - "2 - 2pk"
+        - "3 - 3pk"
+    validations:
+      required: false
+
+  - type: input
+    id: g1_70pn
+    attributes:
+      label: "70 PN（OEM 時填）"
+      placeholder: "70IG0AN0-SA1000"
+    validations:
+      required: false
+
+  - type: input
+    id: g1_70desc
+    attributes:
+      label: "70 品規（OEM 時填）"
+      placeholder: "XXX SYSTEM ASSY//"
+    validations:
+      required: false
+
+  - type: input
+    id: g1_60pn
+    attributes:
+      label: "60 PN（OEM 時填）"
+      placeholder: "60IG0AN1-MB0A01"
+    validations:
+      required: false
+
+  - type: input
+    id: g1_60desc
+    attributes:
+      label: "60 品規（OEM 時填）"
+      placeholder: "XXX MAIN BD.//R1.00 (TEST)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### 分組 2"
+
+  - type: dropdown
+    id: g2_color
+    attributes:
+      label: "產品顏色 (ID+Color)"
+      options:
+        - "0 - 不分色"
+        - "B - Black"
+        - "W - White"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g2_pcba
+    attributes:
+      label: "PCBA"
+      options:
+        - "0 - All SKU 通用 (Default)"
+        - "A - PCBA_US"
+        - "B - PCBA_EU"
+        - "E - EPA"
+        - "I - IPA"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g2_class
+    attributes:
+      label: "機種分類"
+      options:
+        - "0 - 不分子母機 (一般 Router/PCE/USB 等)"
+        - "R - 子母機 - Router (母機)"
+        - "N - 子母機 - Node (子機)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g2_pk
+    attributes:
+      label: "出貨機台數量 (PK)"
+      options:
+        - "1 - 1pk"
+        - "2 - 2pk"
+        - "3 - 3pk"
+    validations:
+      required: false
+
+  - type: input
+    id: g2_70pn
+    attributes:
+      label: "70 PN（OEM 時填）"
+      placeholder: "70IG0AN0-SA1000"
+    validations:
+      required: false
+
+  - type: input
+    id: g2_70desc
+    attributes:
+      label: "70 品規（OEM 時填）"
+      placeholder: "XXX SYSTEM ASSY//"
+    validations:
+      required: false
+
+  - type: input
+    id: g2_60pn
+    attributes:
+      label: "60 PN（OEM 時填）"
+      placeholder: "60IG0AN1-MB0A01"
+    validations:
+      required: false
+
+  - type: input
+    id: g2_60desc
+    attributes:
+      label: "60 品規（OEM 時填）"
+      placeholder: "XXX MAIN BD.//R1.00 (TEST)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### 分組 3"
+
+  - type: dropdown
+    id: g3_color
+    attributes:
+      label: "產品顏色 (ID+Color)"
+      options:
+        - "0 - 不分色"
+        - "B - Black"
+        - "W - White"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g3_pcba
+    attributes:
+      label: "PCBA"
+      options:
+        - "0 - All SKU 通用 (Default)"
+        - "A - PCBA_US"
+        - "B - PCBA_EU"
+        - "E - EPA"
+        - "I - IPA"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g3_class
+    attributes:
+      label: "機種分類"
+      options:
+        - "0 - 不分子母機 (一般 Router/PCE/USB 等)"
+        - "R - 子母機 - Router (母機)"
+        - "N - 子母機 - Node (子機)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g3_pk
+    attributes:
+      label: "出貨機台數量 (PK)"
+      options:
+        - "1 - 1pk"
+        - "2 - 2pk"
+        - "3 - 3pk"
+    validations:
+      required: false
+
+  - type: input
+    id: g3_70pn
+    attributes:
+      label: "70 PN（OEM 時填）"
+      placeholder: "70IG0AN0-SA1000"
+    validations:
+      required: false
+
+  - type: input
+    id: g3_70desc
+    attributes:
+      label: "70 品規（OEM 時填）"
+      placeholder: "XXX SYSTEM ASSY//"
+    validations:
+      required: false
+
+  - type: input
+    id: g3_60pn
+    attributes:
+      label: "60 PN（OEM 時填）"
+      placeholder: "60IG0AN1-MB0A01"
+    validations:
+      required: false
+
+  - type: input
+    id: g3_60desc
+    attributes:
+      label: "60 品規（OEM 時填）"
+      placeholder: "XXX MAIN BD.//R1.00 (TEST)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### 分組 4"
+
+  - type: dropdown
+    id: g4_color
+    attributes:
+      label: "產品顏色 (ID+Color)"
+      options:
+        - "0 - 不分色"
+        - "B - Black"
+        - "W - White"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g4_pcba
+    attributes:
+      label: "PCBA"
+      options:
+        - "0 - All SKU 通用 (Default)"
+        - "A - PCBA_US"
+        - "B - PCBA_EU"
+        - "E - EPA"
+        - "I - IPA"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g4_class
+    attributes:
+      label: "機種分類"
+      options:
+        - "0 - 不分子母機 (一般 Router/PCE/USB 等)"
+        - "R - 子母機 - Router (母機)"
+        - "N - 子母機 - Node (子機)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g4_pk
+    attributes:
+      label: "出貨機台數量 (PK)"
+      options:
+        - "1 - 1pk"
+        - "2 - 2pk"
+        - "3 - 3pk"
+    validations:
+      required: false
+
+  - type: input
+    id: g4_70pn
+    attributes:
+      label: "70 PN（OEM 時填）"
+      placeholder: "70IG0AN0-SA1000"
+    validations:
+      required: false
+
+  - type: input
+    id: g4_70desc
+    attributes:
+      label: "70 品規（OEM 時填）"
+      placeholder: "XXX SYSTEM ASSY//"
+    validations:
+      required: false
+
+  - type: input
+    id: g4_60pn
+    attributes:
+      label: "60 PN（OEM 時填）"
+      placeholder: "60IG0AN1-MB0A01"
+    validations:
+      required: false
+
+  - type: input
+    id: g4_60desc
+    attributes:
+      label: "60 品規（OEM 時填）"
+      placeholder: "XXX MAIN BD.//R1.00 (TEST)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### 分組 5"
+
+  - type: dropdown
+    id: g5_color
+    attributes:
+      label: "產品顏色 (ID+Color)"
+      options:
+        - "0 - 不分色"
+        - "B - Black"
+        - "W - White"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g5_pcba
+    attributes:
+      label: "PCBA"
+      options:
+        - "0 - All SKU 通用 (Default)"
+        - "A - PCBA_US"
+        - "B - PCBA_EU"
+        - "E - EPA"
+        - "I - IPA"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g5_class
+    attributes:
+      label: "機種分類"
+      options:
+        - "0 - 不分子母機 (一般 Router/PCE/USB 等)"
+        - "R - 子母機 - Router (母機)"
+        - "N - 子母機 - Node (子機)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: g5_pk
+    attributes:
+      label: "出貨機台數量 (PK)"
+      options:
+        - "1 - 1pk"
+        - "2 - 2pk"
+        - "3 - 3pk"
+    validations:
+      required: false
+
+  - type: input
+    id: g5_70pn
+    attributes:
+      label: "70 PN（OEM 時填）"
+      placeholder: "70IG0AN0-SA1000"
+    validations:
+      required: false
+
+  - type: input
+    id: g5_70desc
+    attributes:
+      label: "70 品規（OEM 時填）"
+      placeholder: "XXX SYSTEM ASSY//"
+    validations:
+      required: false
+
+  - type: input
+    id: g5_60pn
+    attributes:
+      label: "60 PN（OEM 時填）"
+      placeholder: "60IG0AN1-MB0A01"
+    validations:
+      required: false
+
+  - type: input
+    id: g5_60desc
+    attributes:
+      label: "60 品規（OEM 時填）"
+      placeholder: "XXX MAIN BD.//R1.00 (TEST)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "## SKU 申請（最多 10 組）
+每一組對應 90編碼原則 的一列。沒用到的組留空即可，至少要填一組。"
+
+  - type: markdown
+    attributes:
+      value: "### SKU 1"
+
+  - type: dropdown
+    id: s1_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s1_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s1_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s1_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s1_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 2"
+
+  - type: dropdown
+    id: s2_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s2_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s2_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s2_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s2_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 3"
+
+  - type: dropdown
+    id: s3_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s3_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s3_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s3_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s3_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 4"
+
+  - type: dropdown
+    id: s4_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s4_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s4_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s4_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s4_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 5"
+
+  - type: dropdown
+    id: s5_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s5_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s5_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s5_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s5_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 6"
+
+  - type: dropdown
+    id: s6_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s6_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s6_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s6_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s6_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 7"
+
+  - type: dropdown
+    id: s7_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s7_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s7_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s7_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s7_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 8"
+
+  - type: dropdown
+    id: s8_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s8_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s8_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s8_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s8_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 9"
+
+  - type: dropdown
+    id: s9_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s9_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s9_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s9_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s9_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "### SKU 10"
+
+  - type: dropdown
+    id: s10_sku
+    attributes:
+      label: "SKU（地區）"
+      options:
+        - "US - US"
+        - "MX - MX"
+        - "CN - CN"
+        - "APAC_11 - APAC (2.4G Ch11)"
+        - "APAC_AU - APAC/AU (2.4G Ch11)"
+        - "APAC_13 - APAC (2.4G Ch13，2024.09起不使用)"
+        - "HK - HK"
+        - "IN - IN"
+        - "JP - JP"
+        - "KR - KR"
+        - "IL - IL"
+        - "WEU - WEU"
+        - "EEU - EEU"
+        - "EU - EU"
+        - "AR - AR"
+        - "RU - RU"
+        - "SG - SG"
+        - "TW - TW"
+        - "UK - UK"
+        - "WW - WW"
+        - "CA - CA"
+        - "BZ - BZ"
+        - "AU - AU (2024.09起不使用)"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s10_channel
+    attributes:
+      label: "Channel"
+      options:
+        - "0 - Default"
+        - "A - Amazon"
+        - "B - BBY"
+        - "W - Walmart"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s10_remark
+    attributes:
+      label: "Remark"
+      options:
+        - "PW - 預設加密"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s10_reserve
+    attributes:
+      label: "生產地（保留碼）"
+      options:
+        - "0 - 中國生產 MIC"
+        - "9 - 福利品 Refurbish"
+        - "C - CSC (For 客服入賬使用)"
+        - "S - For 參展樣品 (限NPI機種使用)"
+        - "T - 台灣生產 MIT"
+        - "V - 越南生產 MIV"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: s10_group
+    attributes:
+      label: "對應的 80 PN 分組"
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: false
